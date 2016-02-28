@@ -7,6 +7,7 @@ import org.ncfrcteams.frcscoutinghub2016.network.Message;
 import org.ncfrcteams.frcscoutinghub2016.network.dialogue.checkup.AcknowledgeMessage;
 import org.ncfrcteams.frcscoutinghub2016.network.dialogue.checkup.CheckupMessage;
 import org.ncfrcteams.frcscoutinghub2016.network.dialogue.checkup.MatchRequestMessage;
+import org.ncfrcteams.frcscoutinghub2016.network.dialogue.connect.ConfirmMessage;
 import org.ncfrcteams.frcscoutinghub2016.network.dialogue.connect.ConnectMessage;
 import org.ncfrcteams.frcscoutinghub2016.network.query.HostNameMessage;
 
@@ -55,14 +56,18 @@ public class SocketThread extends Thread {
             if(firstMessage.getType() != Message.Type.CONNECT) {
                 closeAll();
                 return;
+            }
+
+            ConnectMessage connectMessage = (ConnectMessage) firstMessage;
+
+            //Checks if the ConnectMessage had the correct passcode
+            if(!server.matchesPasscode(connectMessage.getPasscode())) {
+                objectOutputStream.writeObject(new ConfirmMessage(false));
+                return;
             } else {
-                ConnectMessage connectMessage = (ConnectMessage) firstMessage;
-                if(!server.matchesPasscode(connectMessage.getPasscode())) {
-                    return;
-                } else {
-                    server.add(this);
-                    connected = true;
-                }
+                objectOutputStream.writeObject(new ConfirmMessage(true));
+                server.add(this);
+                connected = true;
             }
 
             Message newMessage;
@@ -87,14 +92,12 @@ public class SocketThread extends Thread {
         this.clientReadyFlag = ready;
     }
 
-    //TODO: implement requestMatch logic that queries server
     public MatchRecord requestMatch() {
-        return null;
+        return server.getMatchRequest();
     }
 
-    //TODO: implement logic that replaces the last version of this MatchRecord with this one in the database
     public void submitMatchRecord(MatchRecord matchRecord) {
-
+        server.submitMatchRecord(matchRecord);
     }
 
     public boolean isConnected() {

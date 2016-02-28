@@ -13,14 +13,14 @@ public abstract class Hub {
      * creates and starts a Hub containing a server which will manage new and persistent connections
      * and handle all direct dialogue with the remote clients. The hub has heavily restricted access
      * privileges this is highly intentional and the User Interface should not circumvent these
-     * restrictions
+     * restrictions. Will returns null in cases where Server.spawn() returns null;
      *
      * @param name the host users selected name for their hub e.g. "Pyrotech-Hub"
      * @param passcode the host users selected passcode for their hub e.g. "12345"
      * @return a Hub interface for an actively running Server
      */
     public static Hub getHub(String name, String passcode) {
-        return Server.getServer(name,passcode);
+        return Server.spawn(name,passcode);
     }
 
     /**

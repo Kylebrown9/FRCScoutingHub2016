@@ -12,6 +12,4 @@ import java.util.UUID;
 public class Network {
     public static final UUID SCOUTING_HUB_UUID = UUID.fromString("4e73e0f0-dcd5-11e5-a837-0800200c9a66");   //a random UUID generated from a website
     public static final String NAME = "org.ncfrcteams.frcscoutinghub2016";
-    public static enum State {IDLE,SERVER,CLIENT}
-    private State state = State.IDLE;
 }
