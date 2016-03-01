@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.hub.TEST_HubSetupActivity"
-    tools:showIn="@layout/TEST_activity_hub_setup">
+    tools:showIn="@layout/test_activity_hub_setup">
 
     <EditText
         android:layout_width="wrap_content"

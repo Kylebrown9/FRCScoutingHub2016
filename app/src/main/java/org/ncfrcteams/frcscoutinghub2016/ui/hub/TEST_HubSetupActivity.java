@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
-import org.ncfrcteams.frcscoutinghub2016.ui.hubselection.HubListActivity;
 
 public class TEST_HubSetupActivity extends AppCompatActivity {
     private TextView hubName;
@@ -17,7 +16,7 @@ public class TEST_HubSetupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.TEST_activity_hub_setup);
+        setContentView(R.layout.test_activity_hub_setup);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

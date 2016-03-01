@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.TEST_MainActivity"
-    tools:showIn="@layout/TEST_activity_main">
+    tools:showIn="@layout/test_activity_main">
 
     <Button
         android:layout_width="wrap_content"
@@ -20,7 +20,8 @@
         android:layout_marginTop="49dp"
         android:layout_below="@+id/textView"
         android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
+        android:layout_alignStart="@+id/button2"
+        android:onClick="startHubSetupActivity" />
 
     <Button
         android:layout_width="wrap_content"
