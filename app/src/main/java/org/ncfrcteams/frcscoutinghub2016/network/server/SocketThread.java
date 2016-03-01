@@ -109,6 +109,7 @@ public class SocketThread extends Thread {
     }
 
     public void kill() {
+        connected = false;
         server.remove(this);
         alive = false;
         closeAll();

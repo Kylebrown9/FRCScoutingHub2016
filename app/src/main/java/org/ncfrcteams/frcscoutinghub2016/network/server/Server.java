@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class Server extends Hub implements Runnable {
+public class Server implements Runnable, Hub {
     private static int NUM_SERVERS = 0;
 
     private String name;

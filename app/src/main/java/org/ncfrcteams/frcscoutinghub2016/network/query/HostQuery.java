@@ -63,7 +63,9 @@ public class HostQuery extends Thread {
      * if not host has been found returns null
      */
     public HostDetails getHostDetails() {
-        return new HostDetails(hostName,device);
+        if(hostName != null)
+            return new HostDetails(hostName,device);
+        return null;
     }
 
     /**

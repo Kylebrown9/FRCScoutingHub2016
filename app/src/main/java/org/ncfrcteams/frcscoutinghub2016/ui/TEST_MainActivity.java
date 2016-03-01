@@ -1,5 +1,6 @@
 package org.ncfrcteams.frcscoutinghub2016.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,13 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
+import org.ncfrcteams.frcscoutinghub2016.ui.hub.TEST_HubSetupActivity;
+import org.ncfrcteams.frcscoutinghub2016.ui.hubselection.HubListActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class TEST_MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.TEST_activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -30,21 +33,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void startHubListActivity(View view) {
+        Intent intent = new Intent(this, HubListActivity.class);
+        startActivity(intent);
+    }
+
+    public void startHubSetupActivity(View view) {
+        Intent intent = new Intent(this, TEST_HubSetupActivity.class);
+        startActivity(intent);
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
