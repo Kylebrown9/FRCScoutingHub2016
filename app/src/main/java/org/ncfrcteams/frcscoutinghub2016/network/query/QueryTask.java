@@ -55,11 +55,12 @@ public class QueryTask extends AsyncTask<QueryTask.HostDetailSetListener,Void,Se
     @Override
     protected void onPostExecute(Set<HostDetails> hostDetailsSet) {
         super.onPostExecute(hostDetailsSet);
-        Log.d("QueryTask","reached onPostExecute");
-        hostDetailSetListener.onHostDetailsReady(hostDetailsSet);
+        if(hostDetailSetListener.isActive())
+            hostDetailSetListener.onHostDetailsReady(hostDetailsSet);
     }
 
     public interface HostDetailSetListener {
         void onHostDetailsReady(Set<HostDetails> hostDetailsSet);
+        boolean isActive();
     }
 }

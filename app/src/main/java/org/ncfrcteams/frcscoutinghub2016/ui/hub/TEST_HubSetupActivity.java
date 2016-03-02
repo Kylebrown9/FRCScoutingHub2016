@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
 
 public class TEST_HubSetupActivity extends AppCompatActivity {
-    private TextView hubName;
-    private TextView hubPasscode;
+    private EditText hubName;
+    private EditText hubPasscode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +21,10 @@ public class TEST_HubSetupActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        hubName = (TextView) findViewById(R.id.hubName);
-        hubPasscode = (TextView) findViewById(R.id.hubPasscode);
+        hubName = (EditText) findViewById(R.id.hubName);
+        hubPasscode = (EditText) findViewById(R.id.hubPasscode);
+
+        setTitle("Hub Setup");
     }
 
     public void startHubInfoPage(View view) {

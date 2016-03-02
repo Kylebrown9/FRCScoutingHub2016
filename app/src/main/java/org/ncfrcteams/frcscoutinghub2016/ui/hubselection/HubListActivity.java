@@ -17,6 +17,7 @@ import java.util.Set;
 
 public class HubListActivity extends AppCompatActivity implements HubListSelectFragment.OnHostSelectListener, QueryTask.HostDetailSetListener, PasscodeDialog.PasscodeSelectionListener {
     private boolean querying = false;
+    private boolean active;
     private BluetoothDevice targetHost = null;
 
     @Override
@@ -26,8 +27,15 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        active = true;
+
         startListLoadingFragment();
         startQuery();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        active = false;
     }
 
     public void startListLoadingFragment() {
@@ -43,6 +51,10 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
 
         new QueryTask().execute(this);
         querying = true;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     @Override
@@ -76,7 +88,6 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
             return;
 
         Login login = new Login(targetHost,passcode);
-
 
     }
 }

@@ -47,6 +47,6 @@ public class PasscodeDialog {
     }
 
     public interface PasscodeSelectionListener {
-        public void onPasscodeSelect(String passcode);
+        void onPasscodeSelect(String passcode);
     }
 }

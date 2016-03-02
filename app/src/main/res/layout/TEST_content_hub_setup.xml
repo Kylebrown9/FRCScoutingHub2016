@@ -18,19 +18,15 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/hubPasscode"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/hubName"
-        android:layout_marginBottom="84dp"
-        android:layout_above="@+id/hubPasscode"
-        android:layout_alignLeft="@+id/hubPasscode"
-        android:layout_alignStart="@+id/hubPasscode"
-        android:layout_alignRight="@+id/hubPasscode"
-        android:layout_alignEnd="@+id/hubPasscode" />
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,9 +34,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Passcode"
         android:id="@+id/textView2"
-        android:layout_above="@+id/hubPasscode"
-        android:layout_alignLeft="@+id/hubPasscode"
-        android:layout_alignStart="@+id/hubPasscode" />
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/hubName"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,17 +44,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Hub Name:"
         android:id="@+id/textView3"
-        android:layout_above="@+id/hubName"
-        android:layout_alignLeft="@+id/hubName"
-        android:layout_alignStart="@+id/hubName" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Hub Setup"
-        android:id="@+id/textView4"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="39dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -67,8 +53,8 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/button3"
-        android:layout_alignTop="@+id/hubPasscode"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="71dp"
-        android:onClick="startHubInfoPage" />
+        android:layout_marginTop="30dp"
+        android:onClick="startHubInfoPage"
+        android:layout_below="@+id/hubPasscode"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
