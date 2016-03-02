@@ -29,7 +29,8 @@ public class HubListSelectFragment extends Fragment {
     public static HubListSelectFragment newInstance(ArrayList<String> hostNameArray) {
         HubListSelectFragment fragment = new HubListSelectFragment();
         Bundle args = new Bundle();
-        args.putStringArrayList(ARG_PARAM, hostNameArray);
+        args.putStringArrayList("ABAB", hostNameArray);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,20 +38,23 @@ public class HubListSelectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String[] hostNameArray = null;
+        try {
+            hostNameArray = (String[]) savedInstanceState.getStringArrayList("ABAB").toArray();
+            listView = (ListView) getView().findViewById(R.id.listView);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, hostNameArray);
+            listView.setAdapter(adapter);
 
-        String[] hostNameArray = (String[]) savedInstanceState.getStringArrayList(ARG_PARAM).toArray();
-        listView = (ListView) getView().findViewById(R.id.listView);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position,
+                                        long id) {
+                    listener.onHostSelect(hostDetailsList.get(position));
+                }
+            });
+        } catch (NullPointerException e) {
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, hostNameArray);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                listener.onHostSelect(hostDetailsList.get(position));
-            }
-        });
+        }
     }
 
     @Override

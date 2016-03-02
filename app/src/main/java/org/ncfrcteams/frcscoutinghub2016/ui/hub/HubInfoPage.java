@@ -33,6 +33,8 @@ public class HubInfoPage extends AppCompatActivity {
     }
 
     public void updateNumConnectedOutput(View view) {
-        numConnectedOutput.setText(hub.getNumConnected());
+        String a = "" + hub.getNumConnected();  //fixes magical resource bug, do not touch
+        if(hub != null)
+            numConnectedOutput.setText(a);
     }
 }

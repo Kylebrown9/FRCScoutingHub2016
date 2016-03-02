@@ -3,6 +3,7 @@ package org.ncfrcteams.frcscoutinghub2016.network.query;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,17 +25,18 @@ public class QueryTask extends AsyncTask<QueryTask.HostDetailSetListener,Void,Se
     protected Set<HostDetails> doInBackground(HostDetailSetListener... params) {
         Set<BluetoothDevice> bluetoothDeviceSet = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
         Set<HostQuery> hostQuerySet = new HashSet<HostQuery>();
-
+        Log.d("QueryTask","reached doInBackground");
         for(BluetoothDevice bluetoothDevice : bluetoothDeviceSet) {
             hostQuerySet.add(HostQuery.spawn(bluetoothDevice));
         }
-
+        Log.d("QueryTask","reached wait");
         //Wait
         try {
             Thread.sleep(TIMEOUT);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Log.d("QueryTask","passed wait");
 
         Set<HostDetails> newHostDetailsSet = new HashSet<>();
         HostDetails hostDetails;
@@ -53,6 +55,7 @@ public class QueryTask extends AsyncTask<QueryTask.HostDetailSetListener,Void,Se
     @Override
     protected void onPostExecute(Set<HostDetails> hostDetailsSet) {
         super.onPostExecute(hostDetailsSet);
+        Log.d("QueryTask","reached onPostExecute");
         hostDetailSetListener.onHostDetailsReady(hostDetailsSet);
     }
 
