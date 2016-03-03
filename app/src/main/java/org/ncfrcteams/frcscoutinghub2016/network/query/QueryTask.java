@@ -3,6 +3,7 @@ package org.ncfrcteams.frcscoutinghub2016.network.query;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,8 @@ public class QueryTask extends AsyncTask<QueryTask.HostDetailSetListener,Void,Se
     protected Set<HubDetails> doInBackground(HostDetailSetListener... params) {
         Set<BluetoothDevice> bluetoothDeviceSet = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
         Set<HubQuery> hubQuerySet = new HashSet<HubQuery>();
+
+        Log.d("NumBluetooth",Integer.toString(bluetoothDeviceSet.size())); //currently equals 1 if a paired device is within range even unconnected
 
         for(BluetoothDevice bluetoothDevice : bluetoothDeviceSet) {
             hubQuerySet.add(HubQuery.spawn(bluetoothDevice));

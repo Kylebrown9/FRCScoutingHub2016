@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
 import org.ncfrcteams.frcscoutinghub2016.network.Network;
+import org.ncfrcteams.frcscoutinghub2016.network.server.ConnectionListenerJob;
 import org.ncfrcteams.frcscoutinghub2016.network.server.Hub;
 
 public class HubInfoPage extends AppCompatActivity {
@@ -33,8 +34,13 @@ public class HubInfoPage extends AppCompatActivity {
     }
 
     public void updateNumConnectedOutput(View view) {
-        String a = Integer.toString(hub.getNumConnected());  //set text method requires explicit string type
-//        if(hub != null)
+//        String a = Integer.toString(hub.getNumConnected());  //set text method requires explicit string type
+        String a = Integer.toString(ConnectionListenerJob.NUMACCEPTS);
         numConnectedOutput.setText(a);
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        hub.kill();
     }
 }

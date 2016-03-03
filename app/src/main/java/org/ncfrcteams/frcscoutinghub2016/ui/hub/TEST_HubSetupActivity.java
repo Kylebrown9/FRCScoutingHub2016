@@ -4,15 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
 
 public class TEST_HubSetupActivity extends AppCompatActivity {
-    private EditText hubName;
-    private EditText hubPasscode;
+    private EditText hubNameField;
+    private EditText hubPasscodeField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,16 +21,20 @@ public class TEST_HubSetupActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        hubName = (EditText) findViewById(R.id.hubName);
-        hubPasscode = (EditText) findViewById(R.id.hubPasscode);
+        hubNameField = (EditText) findViewById(R.id.hubName);
+        hubPasscodeField = (EditText) findViewById(R.id.hubPasscode);
 
         setTitle("Hub Setup");
     }
 
     public void startHubInfoPage(View view) {
         Intent intent = new Intent(this, HubInfoPage.class);
-        intent.putExtra(HubInfoPage.HUB_NAME,hubName.getText().toString());
-        intent.putExtra(HubInfoPage.HUB_PASSCODE,hubPasscode.getText().toString());
+        String hubName = hubNameField.getText().toString();
+        String hubPasscode = hubPasscodeField.getText().toString();
+        Log.d("HubSetup", "hubNameField " + hubName);
+        Log.d("HubSetup", "hubPasscode " + hubName);
+        intent.putExtra(HubInfoPage.HUB_NAME, hubName);
+        intent.putExtra(HubInfoPage.HUB_PASSCODE, hubPasscode);
         startActivity(intent);
     }
 }

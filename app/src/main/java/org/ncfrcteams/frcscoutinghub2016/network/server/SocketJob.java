@@ -1,8 +1,10 @@
 package org.ncfrcteams.frcscoutinghub2016.network.server;
 
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
 
 import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
+import org.ncfrcteams.frcscoutinghub2016.network.Job;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
 import org.ncfrcteams.frcscoutinghub2016.network.checkup.AcknowledgeMessage;
 import org.ncfrcteams.frcscoutinghub2016.network.checkup.CheckupMessage;
@@ -17,12 +19,18 @@ import java.io.ObjectOutputStream;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class SocketJob extends Thread {
+public class SocketJob extends Job {
     private Server server;
     private BluetoothSocket bluetoothSocket;
-    private boolean alive = true;
+
     private boolean connected = false;
     private boolean clientReadyFlag = false;
+
+    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
+    private Message newMessage;
+    private CheckupMessage checkupMessage;
+    private AcknowledgeMessage acknowledgeMessage;
 
     public static SocketJob spawn(Server server, BluetoothSocket bluetoothSocket) {
         SocketJob newOne = new SocketJob(server, bluetoothSocket);
@@ -31,14 +39,12 @@ public class SocketJob extends Thread {
     }
 
     private SocketJob(Server server, BluetoothSocket bluetoothSocket) {
+        super(true);
         this.server = server;
         this.bluetoothSocket = bluetoothSocket;
     }
 
-    public void run() {
-        ObjectOutputStream objectOutputStream;
-        ObjectInputStream objectInputStream;
-
+    public void init() {
         try {
             objectInputStream = new ObjectInputStream(bluetoothSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(bluetoothSocket.getOutputStream());
@@ -60,28 +66,37 @@ public class SocketJob extends Thread {
             //Checks if the ConnectMessage had the correct passcode
             if(!server.matchesPasscode(connectMessage.getPasscode())) {
                 objectOutputStream.writeObject(new ConfirmMessage(false));
-                return;
             } else {
                 objectOutputStream.writeObject(new ConfirmMessage(true));
                 server.add(this);
                 connected = true;
             }
 
-            Message newMessage;
-            CheckupMessage checkupMessage;
-            AcknowledgeMessage acknowledgeMessage;
+        } catch (ClassNotFoundException e) {
+            Log.d("SocketJob-Init","received object not of message type");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.d("SocketJob-Init","object stream failure");
+            e.printStackTrace();
+        }
+    }
 
-            while(alive) {
-                newMessage = (Message) objectInputStream.readObject();
-                if(newMessage.getType() != Message.Type.CHECKUP) {
-                    continue;
-                }
-                checkupMessage = (CheckupMessage) newMessage;
-                acknowledgeMessage = checkupMessage.update(this);
-                objectOutputStream.writeObject(acknowledgeMessage);
+    public void periodic() {
+        try {
+            newMessage = (Message) objectInputStream.readObject();
+            if(newMessage.getType() != Message.Type.CHECKUP) {
+                return;
             }
-        } catch (IOException | ClassNotFoundException e1) {
-            e1.printStackTrace();
+            checkupMessage = (CheckupMessage) newMessage;
+            acknowledgeMessage = checkupMessage.update(this);
+            objectOutputStream.writeObject(acknowledgeMessage);
+
+        } catch (ClassNotFoundException e) {
+            Log.d("SocketJob-Periodic","received object not of message type");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.d("SocketJob-Periodic","object stream failure");
+            e.printStackTrace();
         }
     }
 
@@ -106,9 +121,9 @@ public class SocketJob extends Thread {
     }
 
     public void kill() {
+        super.kill();
         connected = false;
         server.remove(this);
-        alive = false;
         closeAll();
     }
 
