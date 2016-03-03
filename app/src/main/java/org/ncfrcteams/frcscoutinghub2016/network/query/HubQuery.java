@@ -13,24 +13,24 @@ import java.io.ObjectOutputStream;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class HostQuery extends Thread {
+public class HubQuery extends Thread {
     BluetoothDevice device;
     BluetoothSocket bluetoothSocket;
 
-    String hostName = null;
+    String hubName = null;
 
     /**
      * Creates and starts a thread that will attempt to find a host on a BluetoothDevice
      * @param device the BluetoothDevice you want to determine whether or not is hosting
      * @return the thread that is performing the check
      */
-    public static HostQuery spawn(BluetoothDevice device) {
-        HostQuery hostQuery = new HostQuery(device);
-        hostQuery.start();
-        return hostQuery;
+    public static HubQuery spawn(BluetoothDevice device) {
+        HubQuery hubQuery = new HubQuery(device);
+        hubQuery.start();
+        return hubQuery;
     }
 
-    private HostQuery(BluetoothDevice device) {
+    private HubQuery(BluetoothDevice device) {
         this.device = device;
     }
 
@@ -47,11 +47,11 @@ public class HostQuery extends Thread {
             objectInputStream = new ObjectInputStream(bluetoothSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(bluetoothSocket.getOutputStream());
 
-            objectOutputStream.writeObject(new HostQueryMessage());
+            objectOutputStream.writeObject(new HubQueryMessage());
             message = (Message) objectInputStream.readObject();
 
-            if(message.getType() == Message.Type.HOSTNAME) {
-                hostName = ((HostNameMessage) message).getName();
+            if(message.getType() == Message.Type.HUBNAME) {
+                hubName = ((HubNameMessage) message).getName();
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -62,14 +62,14 @@ public class HostQuery extends Thread {
      * @return an object that describes the host that corresponds to its BluetoothDevice and name if there is one,
      * if not host has been found returns null
      */
-    public HostDetails getHostDetails() {
-        if(hostName != null)
-            return new HostDetails(hostName,device);
+    public HubDetails getHostDetails() {
+        if(hubName != null)
+            return new HubDetails(hubName,device);
         return null;
     }
 
     /**
-     * Stops the HostQuery operation by closing the ObjectInputStream
+     * Stops the HubQuery operation by closing the ObjectInputStream
      */
     public void kill() {
         try {

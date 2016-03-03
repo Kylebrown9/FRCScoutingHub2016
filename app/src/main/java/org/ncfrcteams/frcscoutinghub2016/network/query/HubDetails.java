@@ -5,11 +5,11 @@ import android.bluetooth.BluetoothDevice;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class HostDetails {
+public class HubDetails {
     private String name;
     private BluetoothDevice device;
 
-    public HostDetails(String name, BluetoothDevice device) {
+    public HubDetails(String name, BluetoothDevice device) {
         this.name = name;
         this.device = device;
     }

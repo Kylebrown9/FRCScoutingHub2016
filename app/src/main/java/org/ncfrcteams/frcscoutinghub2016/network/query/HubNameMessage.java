@@ -7,15 +7,15 @@ import java.io.Serializable;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class HostNameMessage extends Message implements Serializable {
-    String hostName;
+public class HubNameMessage extends Message implements Serializable {
+    String hubName;
 
-    public HostNameMessage(String hostName) {
-        super(Type.HOSTNAME);
-        this.hostName = hostName;
+    public HubNameMessage(String hubName) {
+        super(Type.HUBNAME);
+        this.hubName = hubName;
     }
 
     public String getName() {
-        return hostName;
+        return hubName;
     }
 }

@@ -1,4 +1,4 @@
-package org.ncfrcteams.frcscoutinghub2016.network.dialogue.connect;
+package org.ncfrcteams.frcscoutinghub2016.network.connect;
 
 import android.bluetooth.BluetoothDevice;
 

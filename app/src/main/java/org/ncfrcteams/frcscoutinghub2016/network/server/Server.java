@@ -2,59 +2,57 @@ package org.ncfrcteams.frcscoutinghub2016.network.server;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
-import android.util.Log;
 
 import org.ncfrcteams.frcscoutinghub2016.database.Database;
 import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
+import org.ncfrcteams.frcscoutinghub2016.network.Job;
 import org.ncfrcteams.frcscoutinghub2016.network.Network;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by Admin on 2/26/2016.
  */
-public class Server implements Runnable, Hub {
-    private static int NUM_SERVERS = 0;
-
+public class Server extends Job implements Hub {
     private String name;
     private String passcode;
-    private ConnectionListener connectionListener;
-    private List<SocketThread> socketThreadList = new ArrayList<>();
+    private ConnectionListenerJob connectionListenerJob;
+    private List<SocketJob> socketJobList = new ArrayList<>();
 
-    private List<MatchRecord> matchRequests;
+    private List<MatchRecord> matchRequestList;
+    private Stack<MatchRecord> matchRequestStack = new Stack<MatchRecord>();
 
     private Database database = new Database();
 
     public static Server spawn(String name, String passcode) {
-        if(NUM_SERVERS != 0) {
-            Log.d("Network", "Attempted to create more than one Server");
-            return null;
-        }
-        NUM_SERVERS++;
         Server server = new Server(name,passcode);
         server.run();
         return server;
     }
 
     private Server(String name, String passcode) {
+        super(false);
         this.name = name;
         this.passcode = passcode;
     }
 
-    public void run() {
+    public void init() {
         try {
             BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
             BluetoothServerSocket serverSocket = adapter.listenUsingRfcommWithServiceRecord(Network.NAME, Network.SCOUTING_HUB_UUID);
-            connectionListener = ConnectionListener.spawn(this, serverSocket);
+            connectionListenerJob = ConnectionListenerJob.spawn(this, serverSocket);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //******************************Socket Methods*********************************
-    public String getName() {
+    public void periodic() {}
+
+    //******************************SocketJob Methods*********************************
+    public String getHubName() {
         return name;
     }
 
@@ -62,12 +60,12 @@ public class Server implements Runnable, Hub {
         return attempt.equals(passcode);
     }
 
-    public void add(SocketThread socketThread) {
-        socketThreadList.add(socketThread);
+    public void add(SocketJob socketJob) {
+        socketJobList.add(socketJob);
     }
 
-    public void remove(SocketThread socketThread) {
-        socketThreadList.remove(socketThread);
+    public void remove(SocketJob socketJob) {
+        socketJobList.remove(socketJob);
     }
 
     public void submitMatchRecord(MatchRecord matchRecord) {
@@ -75,12 +73,18 @@ public class Server implements Runnable, Hub {
     }
 
     public MatchRecord getMatchRequest() {
+        if(matchRequestStack.size() != 0) {
+            return matchRequestStack.pop();
+        }
         return null;
     }
 
     //*****************************Interface Methods***************************************
-    public void publishMatchRequests(List<MatchRecord> matchRequests) {
-        this.matchRequests = matchRequests;
+    public void publishMatchRequests(List<MatchRecord> matchRequestList) {
+        this.matchRequestList = matchRequestList;
+
+        matchRequestStack = new Stack<MatchRecord>();
+        matchRequestStack.addAll(matchRequestList);
     }
 
     public Database getDatabase() {
@@ -88,12 +92,12 @@ public class Server implements Runnable, Hub {
     }
 
     /**
-     * @return the number of connected SocketThreads as defined by SocketThread.isConnected()
+     * @return the number of connected SocketThreads as defined by SocketJob.isConnected()
      */
     public int getNumConnected() {
         int num = 0;
-        for(SocketThread socketThread : socketThreadList) {
-            if(socketThread.isConnected()) {
+        for(SocketJob socketJob : socketJobList) {
+            if(socketJob.isConnected()) {
                 num++;
             }
         }
@@ -101,13 +105,13 @@ public class Server implements Runnable, Hub {
     }
 
     /**
-     * @return the number of connected and ready SocketThreads as defined by SocketThread.isConnected()
-     * and SocketThread.isReady()
+     * @return the number of connected and ready SocketThreads as defined by SocketJob.isConnected()
+     * and SocketJob.isReady()
      */
     public int getNumReady() {
         int num = 0;
-        for(SocketThread socketThread : socketThreadList) {
-            if(socketThread.isConnected() && socketThread.isReady()) {
+        for(SocketJob socketJob : socketJobList) {
+            if(socketJob.isConnected() && socketJob.isReady()) {
                 num++;
             }
         }
@@ -115,12 +119,12 @@ public class Server implements Runnable, Hub {
     }
 
     /**
-     * Kills the contained ConnectionListener and all associated SocketThreads
+     * Kills the contained ConnectionListenerJob and all associated SocketThreads
      */
     public void kill() {
-        connectionListener.kill();
-        for(SocketThread socketThread : socketThreadList) {
-            socketThread.kill();
+        connectionListenerJob.kill();
+        for(SocketJob socketJob : socketJobList) {
+            socketJob.kill();
         }
     }
 }

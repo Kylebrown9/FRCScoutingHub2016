@@ -1,12 +1,10 @@
-package org.ncfrcteams.frcscoutinghub2016.network.dialogue.checkup;
+package org.ncfrcteams.frcscoutinghub2016.network.checkup;
 
 import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
-import org.ncfrcteams.frcscoutinghub2016.network.server.Server;
 import org.ncfrcteams.frcscoutinghub2016.network.server.SocketThread;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Created by Admin on 2/26/2016.

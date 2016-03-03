@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Admin on 2/26/2016.
  */
 public class Message implements Serializable {
-    public enum Type {QUERY,HOSTNAME,CONNECT,CONFIRM,CHECKUP,ACKNOWLEDGE};
+    public enum Type {QUERY,HUBNAME,CONNECT,CONFIRM,CHECKUP,ACKNOWLEDGE};
 
     Type type;
 

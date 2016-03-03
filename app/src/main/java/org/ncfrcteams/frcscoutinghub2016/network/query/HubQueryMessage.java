@@ -7,11 +7,11 @@ import java.io.Serializable;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class HostQueryMessage extends Message implements Serializable {
+public class HubQueryMessage extends Message implements Serializable {
     /**
      * Constructs Message with type Type.QUERY
      */
-    public HostQueryMessage() {
+    public HubQueryMessage() {
         super(Type.QUERY);
     }
 }

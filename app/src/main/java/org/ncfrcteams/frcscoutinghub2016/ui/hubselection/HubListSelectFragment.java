@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
-import org.ncfrcteams.frcscoutinghub2016.network.query.HostDetails;
+import org.ncfrcteams.frcscoutinghub2016.network.query.HubDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class HubListSelectFragment extends Fragment {
     private static final String ARG_PARAM = "ARG_PARAM";
 
-    private List<HostDetails> hostDetailsList;
+    private List<HubDetails> hubDetailsList;
     private ListView listView;
 
     private OnHostSelectListener listener;
@@ -49,7 +49,7 @@ public class HubListSelectFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position,
                                         long id) {
-                    listener.onHostSelect(hostDetailsList.get(position));
+                    listener.onHostSelect(hubDetailsList.get(position));
                 }
             });
         } catch (NullPointerException e) {
@@ -81,6 +81,6 @@ public class HubListSelectFragment extends Fragment {
     }
 
     public interface OnHostSelectListener {
-        void onHostSelect(HostDetails hostDetails);
+        void onHostSelect(HubDetails hubDetails);
     }
 }

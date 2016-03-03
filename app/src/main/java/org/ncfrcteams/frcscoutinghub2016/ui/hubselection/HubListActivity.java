@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
-import org.ncfrcteams.frcscoutinghub2016.network.dialogue.connect.Login;
+import org.ncfrcteams.frcscoutinghub2016.network.connect.Login;
 import org.ncfrcteams.frcscoutinghub2016.network.query.PasscodeDialog;
-import org.ncfrcteams.frcscoutinghub2016.network.query.HostDetails;
+import org.ncfrcteams.frcscoutinghub2016.network.query.HubDetails;
 import org.ncfrcteams.frcscoutinghub2016.network.query.QueryTask;
 
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.Set;
 
 public class HubListActivity extends AppCompatActivity implements HubListSelectFragment.OnHostSelectListener, QueryTask.HostDetailSetListener, PasscodeDialog.PasscodeSelectionListener {
     private boolean querying = false;
+    private boolean isLoading = true;
     private boolean active;
     private BluetoothDevice targetHost = null;
 
@@ -25,6 +29,7 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.
         setSupportActionBar(toolbar);
 
         active = true;
@@ -33,11 +38,33 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
         startQuery();
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_hub_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                if(!isLoading) {
+                    startListLoadingFragment();
+                    startQuery();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     protected void onDestroy() {
         super.onDestroy();
         active = false;
     }
 
+
+    //**********************************************************************************************
     public void startListLoadingFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer, ListLoadingFragment.newInstance());
@@ -58,27 +85,29 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
     }
 
     @Override
-    public void onHostDetailsReady(Set<HostDetails> hostDetailsSet) {
+    public void onHostDetailsReady(Set<HubDetails> hubDetailsSet) {
         querying = false;
-        startListSelectFragment(new ArrayList<HostDetails>(hostDetailsSet));
+        startListSelectFragment(new ArrayList<HubDetails>(hubDetailsSet));
     }
 
-    public void startListSelectFragment(ArrayList<HostDetails> hostDetailsList) {
+    public void startListSelectFragment(ArrayList<HubDetails> hubDetailsList) {
         ArrayList<String> hostNameList = new ArrayList<String>();
 
-        for(HostDetails hostDetails : hostDetailsList) {
-            hostNameList.add(hostDetails.getName());
+        for(HubDetails hubDetails : hubDetailsList) {
+            hostNameList.add(hubDetails.getName());
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer, HubListSelectFragment.newInstance(hostNameList));
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
+
+        isLoading = false;
     }
 
-    public void onHostSelect(HostDetails hostDetails) {
-        targetHost = hostDetails.getDevice();
-        PasscodeDialog passcodeDialog = new PasscodeDialog(this,this,hostDetails.getName());
+    public void onHostSelect(HubDetails hubDetails) {
+        targetHost = hubDetails.getDevice();
+        PasscodeDialog passcodeDialog = new PasscodeDialog(this,this, hubDetails.getName());
         passcodeDialog.show();
     }
 
