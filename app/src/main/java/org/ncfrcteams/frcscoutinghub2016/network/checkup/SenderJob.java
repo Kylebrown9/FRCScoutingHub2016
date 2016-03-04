@@ -36,7 +36,7 @@ public class SenderJob extends Job {
             Thread.sleep(PULSE_RATE);
             outputStream.writeObject(client.getHeartBeatMessage());
         } catch (IOException e) {
-            Log.d("Client-SenderJob", "failed to write HeartBeatMessage");
+            Log.d("Client-SenderJob", "failed to put HeartBeatMessage");
             e.printStackTrace();
         } catch (InterruptedException e) {
             Log.d("Client-SenderJob","interrupted during sleep");

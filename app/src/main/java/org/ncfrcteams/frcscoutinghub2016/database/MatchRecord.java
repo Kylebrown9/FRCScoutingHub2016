@@ -33,7 +33,7 @@ public class MatchRecord<K,V> implements Serializable {
         return this.TeamNum == other.TeamNum && this.MatchNum == other.MatchNum;
     }
 
-    public synchronized void write(K key, V value) {
+    public synchronized void put(K key, V value) {
         pairList.add(new Pair<>(key,map.get(key)));
         map.put(key,value);
     }
@@ -45,7 +45,7 @@ public class MatchRecord<K,V> implements Serializable {
         map.put(lastState.key,lastState.value);
     }
 
-    public synchronized V getValue(K key) {
+    public synchronized V get(K key) {
         return map.get(key);
     }
 
