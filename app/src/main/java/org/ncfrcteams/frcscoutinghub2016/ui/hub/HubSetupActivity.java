@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
 
-public class TEST_HubSetupActivity extends AppCompatActivity {
+public class HubSetupActivity extends AppCompatActivity {
     private EditText hubNameField;
     private EditText hubPasscodeField;
 

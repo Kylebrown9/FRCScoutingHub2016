@@ -27,7 +27,7 @@
             android:label="@string/title_activity_hub_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.hub.TEST_HubSetupActivity"
+            android:name=".ui.hub.HubSetupActivity"
             android:label="@string/title_activity_hub_setup"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

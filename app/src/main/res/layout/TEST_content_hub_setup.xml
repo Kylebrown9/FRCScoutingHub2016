@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.hub.TEST_HubSetupActivity"
+    tools:context=".ui.hub.HubSetupActivity"
     tools:showIn="@layout/test_activity_hub_setup">
 
     <EditText

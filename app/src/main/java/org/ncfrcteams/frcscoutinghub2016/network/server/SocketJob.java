@@ -46,6 +46,7 @@ public class SocketJob extends Job {
 
     public void init() {
         try {
+            while (!bluetoothSocket.isConnected());
             Log.d("SocketJob","reaches init");
             objectInputStream = new ObjectInputStream(bluetoothSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(bluetoothSocket.getOutputStream());
