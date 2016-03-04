@@ -34,7 +34,7 @@ public class Database {
         List<MatchRecord> teamMatchRecords = new ArrayList<>();
 
         for (MatchRecord record : matchRecordList) {
-            if(record.TEAM_NUM == team) {
+            if(record.getTeamNum() == team) {
                 teamMatchRecords.add(record);
             }
         }

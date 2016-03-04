@@ -5,7 +5,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/frc_scout_2016_icon_resized"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -25,14 +25,17 @@
         <activity
             android:name=".ui.hubselection.HubListActivity"
             android:label="@string/title_activity_hub_list"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.hub.HubSetupActivity"
             android:label="@string/title_activity_hub_setup"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.hub.HubInfoPage"
             android:label="@string/title_activity_hub_info_page"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

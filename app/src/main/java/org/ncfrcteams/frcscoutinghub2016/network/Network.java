@@ -31,23 +31,23 @@ public class Network {
             Log.d("HubQuery", "Error creating socket");}
 
         try {
-            socket.connect();
-            Log.e("HubQuery","Connected");
+            if (socket != null) socket.connect();
+            Log.e("HubQuery","Connected via standard method");
         } catch (IOException e) {
             Log.e("",e.getMessage());
             try {
-                Log.d("HubQuery", "trying fallback...");
+                Log.d("HubQuery", "Failed fallback");
 
                 socket =(BluetoothSocket) bluetoothDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(bluetoothDevice,1);
                 socket.connect();
 
-                Log.d("HubQuery", "Connected");
+                Log.d("HubQuery", "Connected via fallback");
             }
             catch (Exception e2) {
-                Log.d("HubQuery", "Couldn't establish Bluetooth connection!");
+                Log.d("HubQuery", "Failed fallback");
             }
         }
-        Log.d("HubQuery",socket.isConnected()? "socket is connected" : "socket is not connected");
+        Log.d("HubQuery",(socket != null && socket.isConnected())? "socket is connected" : "socket is not connected");
         return socket;
     }
 }

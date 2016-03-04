@@ -2,6 +2,7 @@ package org.ncfrcteams.frcscoutinghub2016.database;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,8 +19,8 @@ public class MatchRecord<K,V> implements Serializable {
     public MatchRecord(int TeamNum, int MatchNum) {
         this.TeamNum = TeamNum;
         this.MatchNum = MatchNum;
-        map = new TreeMap<K,V>();
-        pairList = new ArrayList<Pair<K, V>>();
+        map = new TreeMap<>();
+        pairList = new ArrayList<>();
     }
 
     public MatchRecord(int TeamNum, int MatchNum, Map<K,V> map) {
@@ -29,6 +30,9 @@ public class MatchRecord<K,V> implements Serializable {
     }
 
     public boolean equals(Object o) {
+        if(o.getClass() != this.getClass())
+            return false;
+
         MatchRecord other = (MatchRecord) o;
         return this.TeamNum == other.TeamNum && this.MatchNum == other.MatchNum;
     }
@@ -50,7 +54,7 @@ public class MatchRecord<K,V> implements Serializable {
     }
 
     public synchronized MatchRecord getCleanClone() {
-        return new MatchRecord<>(TeamNum,MatchNum,map);
+        return new MatchRecord<>(TeamNum,MatchNum,new HashMap<>(map));
     }
 
     public int getMatchNum() {
@@ -61,11 +65,11 @@ public class MatchRecord<K,V> implements Serializable {
         return TeamNum;
     }
 
-    public class Pair<K,V> {
-        public K key;
-        public V value;
+    public class Pair<K1,V1> {
+        public K1 key;
+        public V1 value;
 
-        public Pair(K key, V value) {
+        public Pair(K1 key, V1 value) {
             this.key = key;
             this.value = value;
         }

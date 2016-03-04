@@ -41,7 +41,7 @@ public class QueryTask extends AsyncTask<QueryTask.HubDetailSetListener,Void,Set
         Set<HubDetails> newHubDetailsSet = new HashSet<>();
         HubDetails hubDetails;
         for(HubQuery hubQuery : hubQuerySet) {
-            hubDetails = hubQuery.getHostDetails();
+            hubDetails = hubQuery.getHubDetails();
             if (hubDetails != null)
                 newHubDetailsSet.add(hubDetails);
 

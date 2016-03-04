@@ -62,10 +62,10 @@ public class HubQuery extends Thread {
     }
 
     /**
-     * @return an object that describes the host that corresponds to its BluetoothDevice and name if there is one,
-     * if not host has been found returns null
+     * @return an object that describes the hub that corresponds to its BluetoothDevice and name if there is one,
+     * if not hub has been found returns null
      */
-    public HubDetails getHostDetails() {
+    public HubDetails getHubDetails() {
         if(hubName != null)
             return new HubDetails(hubName,device);
         return null;

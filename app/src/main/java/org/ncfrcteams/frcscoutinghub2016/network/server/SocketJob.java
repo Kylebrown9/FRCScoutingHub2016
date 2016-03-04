@@ -46,7 +46,6 @@ public class SocketJob extends Job {
 
     public void init() {
         try {
-            while (!bluetoothSocket.isConnected());
             Log.d("SocketJob","reaches init");
             objectInputStream = new ObjectInputStream(bluetoothSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(bluetoothSocket.getOutputStream());
@@ -78,18 +77,17 @@ public class SocketJob extends Job {
 
         } catch (ClassNotFoundException e) {
             Log.d("SocketJob-Init","received object not of message type");
+            kill();
             e.printStackTrace();
         } catch (IOException e) {
             Log.d("SocketJob-Init","object stream failure");
+            kill();
             e.printStackTrace();
         }
     }
 
     public void periodic() {
         try {
-//            if(objectInputStream == null) {
-//                return;
-//            }
             newMessage = (Message) objectInputStream.readObject();
             if(newMessage.getType() != Message.Type.CHECKUP) {
                 return;
