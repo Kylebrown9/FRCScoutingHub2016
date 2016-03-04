@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/test_content_hub_setup" />
+    <include layout="@layout/h_content_hub_setup" />
 
 </android.support.design.widget.CoordinatorLayout>

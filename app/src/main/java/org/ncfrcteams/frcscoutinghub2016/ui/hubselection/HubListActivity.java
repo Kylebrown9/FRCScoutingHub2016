@@ -27,7 +27,7 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hub_list);
+        setContentView(R.layout.s_activity_hub_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        toolbar.
         setSupportActionBar(toolbar);
@@ -40,7 +40,7 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_hub_list, menu);
+        inflater.inflate(R.menu.s_menu_hub_list, menu);
         return true;
     }
 
