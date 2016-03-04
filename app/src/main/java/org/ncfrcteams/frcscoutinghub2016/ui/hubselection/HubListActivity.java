@@ -18,7 +18,7 @@ import org.ncfrcteams.frcscoutinghub2016.network.query.QueryTask;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class HubListActivity extends AppCompatActivity implements HubListSelectFragment.OnHostSelectListener, QueryTask.HostDetailSetListener, PasscodeDialog.PasscodeSelectionListener {
+public class HubListActivity extends AppCompatActivity implements HubListSelectFragment.OnHostSelectListener, QueryTask.HubDetailSetListener, PasscodeDialog.PasscodeSelectionListener {
     private boolean querying = false;
     private boolean isLoading = true;
     private boolean active;
@@ -85,7 +85,7 @@ public class HubListActivity extends AppCompatActivity implements HubListSelectF
     }
 
     @Override
-    public void onHostDetailsReady(Set<HubDetails> hubDetailsSet) {
+    public void onHubDetailsReady(Set<HubDetails> hubDetailsSet) {
         querying = false;
         startListSelectFragment(new ArrayList<HubDetails>(hubDetailsSet));
     }

@@ -2,7 +2,7 @@ package org.ncfrcteams.frcscoutinghub2016.network.checkup;
 
 import android.util.Log;
 
-import org.ncfrcteams.frcscoutinghub2016.network.Job;
+import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothServerSocket;
 
 import org.ncfrcteams.frcscoutinghub2016.database.Database;
 import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
-import org.ncfrcteams.frcscoutinghub2016.network.Job;
+import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 import org.ncfrcteams.frcscoutinghub2016.network.Network;
 
 import java.io.IOException;

@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
 import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
-import org.ncfrcteams.frcscoutinghub2016.network.Job;
+import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
 import org.ncfrcteams.frcscoutinghub2016.network.checkup.AcknowledgeMessage;
 import org.ncfrcteams.frcscoutinghub2016.network.checkup.CheckupMessage;
@@ -46,18 +46,21 @@ public class SocketJob extends Job {
 
     public void init() {
         try {
+            Log.d("SocketJob","reaches init");
             objectInputStream = new ObjectInputStream(bluetoothSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(bluetoothSocket.getOutputStream());
 
+            Log.d("SocketJob","reaches message request");
             Message firstMessage = (Message) objectInputStream.readObject();
             if(firstMessage.getType() == Message.Type.QUERY) {
+                Log.d("SocketJob","First message is a QUERY");
                 objectOutputStream.writeObject(new HubNameMessage(server.getName()));
-                closeAll();
+                kill();
                 return;
             }
 
             if(firstMessage.getType() != Message.Type.CONNECT) {
-                closeAll();
+                kill();
                 return;
             }
 
@@ -83,6 +86,9 @@ public class SocketJob extends Job {
 
     public void periodic() {
         try {
+//            if(objectInputStream == null) {
+//                return;
+//            }
             newMessage = (Message) objectInputStream.readObject();
             if(newMessage.getType() != Message.Type.CHECKUP) {
                 return;
@@ -122,15 +128,23 @@ public class SocketJob extends Job {
 
     public void kill() {
         super.kill();
-        connected = false;
-        server.remove(this);
+        if(connected) {
+            connected = false;
+            server.remove(this);
+        }
         closeAll();
     }
 
     public void closeAll() {
         try {
+            objectInputStream.close();
+            objectOutputStream.close();
             bluetoothSocket.close();
         } catch (IOException e) {
+            Log.d("SocketJob-closeAll()","IOException");
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            Log.d("SocketJob-closeAll()","NullPointerException");
             e.printStackTrace();
         }
     }

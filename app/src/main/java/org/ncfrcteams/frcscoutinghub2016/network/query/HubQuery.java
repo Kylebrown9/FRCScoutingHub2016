@@ -10,7 +10,6 @@ import org.ncfrcteams.frcscoutinghub2016.network.Message;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.UUID;
 
 /**
  * Created by Admin on 2/26/2016.
@@ -18,6 +17,8 @@ import java.util.UUID;
 public class HubQuery extends Thread {
     BluetoothDevice device;
     BluetoothSocket bluetoothSocket;
+    ObjectInputStream objectInputStream = null;
+    ObjectOutputStream objectOutputStream = null;
 
     String hubName = null;
 
@@ -40,15 +41,10 @@ public class HubQuery extends Thread {
      * Attempts to acquire a HostDetail from its BluetoothDevice
      */
     public void run() {
-        ObjectOutputStream objectOutputStream;
-        ObjectInputStream objectInputStream;
+        bluetoothSocket = Network.getConnectedSocketTo(device);
 
         Message message;
-        Log.d("HubQuery","reached getConnectedSocket()");
-        bluetoothSocket = getConnectedSocket(device);
-        Log.d("HubQuery",bluetoothSocket == null? "socket is null" : "socket is not null");
         try {
-
             objectInputStream = new ObjectInputStream(bluetoothSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(bluetoothSocket.getOutputStream());
 
@@ -60,6 +56,8 @@ public class HubQuery extends Thread {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            closeAll();
         }
     }
 
@@ -77,42 +75,22 @@ public class HubQuery extends Thread {
      * Stops the HubQuery operation by closing the ObjectInputStream
      */
     public void kill() {
-        if(bluetoothSocket == null)
-            return;
-
-        try {
-            bluetoothSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        closeAll();
     }
 
-    //http://stackoverflow.com/questions/18657427/ioexception-read-failed-socket-might-closed-bluetooth-on-android-4-3
-    public BluetoothSocket getConnectedSocket(BluetoothDevice bluetoothDevice) {
-        BluetoothSocket socket = null;
-
+    public void closeAll() {
         try {
-            socket = device.createRfcommSocketToServiceRecord(Network.SCOUTING_HUB_UUID);
-        } catch (Exception e) {Log.d("HubQuery", "Error creating socket");}
+            if(objectOutputStream != null)
+                objectOutputStream.close();
 
-        try {
-            socket.connect();
-            Log.e("HubQuery","Connected");
+            if(objectInputStream != null)
+                objectInputStream.close();
+
+            if(bluetoothSocket != null)
+                bluetoothSocket.close();
         } catch (IOException e) {
-            Log.e("",e.getMessage());
-            try {
-                Log.d("HubQuery", "trying fallback...");
-
-                socket =(BluetoothSocket) device.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(device,1);
-                socket.connect();
-
-                Log.d("HubQuery", "Connected");
-            }
-            catch (Exception e2) {
-                Log.d("HubQuery", "Couldn't establish Bluetooth connection!");
-            }
+            Log.d("HubQuery","IOException in IO stream closings");
+            e.printStackTrace();
         }
-        Log.d("HubQuery",socket.isConnected()? "socket is connected" : "socket is not connected");
-        return socket;
     }
 }

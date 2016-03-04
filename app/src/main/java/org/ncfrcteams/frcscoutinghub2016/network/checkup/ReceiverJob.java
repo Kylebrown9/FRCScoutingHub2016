@@ -1,6 +1,6 @@
 package org.ncfrcteams.frcscoutinghub2016.network.checkup;
 
-import org.ncfrcteams.frcscoutinghub2016.network.Job;
+import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 
 import java.io.ObjectInputStream;
 

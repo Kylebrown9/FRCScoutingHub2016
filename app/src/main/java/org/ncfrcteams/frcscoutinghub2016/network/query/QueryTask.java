@@ -11,9 +11,9 @@ import java.util.Set;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class QueryTask extends AsyncTask<QueryTask.HostDetailSetListener,Void,Set<HubDetails>> {
-    public static final long TIMEOUT = 3000;
-    private HostDetailSetListener hostDetailSetListener;
+public class QueryTask extends AsyncTask<QueryTask.HubDetailSetListener,Void,Set<HubDetails>> {
+    public static final long TIMEOUT = 4000;
+    private HubDetailSetListener hubDetailSetListener;
 
     /**
      * The core functionality of the QueryTask.
@@ -22,7 +22,7 @@ public class QueryTask extends AsyncTask<QueryTask.HostDetailSetListener,Void,Se
      * This should not be explicitly called.
      */
     @Override
-    protected Set<HubDetails> doInBackground(HostDetailSetListener... params) {
+    protected Set<HubDetails> doInBackground(HubDetailSetListener... params) {
         Set<BluetoothDevice> bluetoothDeviceSet = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
         Set<HubQuery> hubQuerySet = new HashSet<HubQuery>();
 
@@ -48,19 +48,31 @@ public class QueryTask extends AsyncTask<QueryTask.HostDetailSetListener,Void,Se
             hubQuery.kill();
         }
 
-        this.hostDetailSetListener = params[0];
+        this.hubDetailSetListener = params[0];
         return newHubDetailsSet;
     }
 
     @Override
     protected void onPostExecute(Set<HubDetails> hubDetailsSet) {
         super.onPostExecute(hubDetailsSet);
-        if(hostDetailSetListener.isActive())
-            hostDetailSetListener.onHostDetailsReady(hubDetailsSet);
+        if(hubDetailSetListener.isActive())
+            hubDetailSetListener.onHubDetailsReady(hubDetailsSet);
     }
 
-    public interface HostDetailSetListener {
-        void onHostDetailsReady(Set<HubDetails> hubDetailsSet);
+    /**
+     * The interface which any Activity creating a QueryTask must implement in order to receive
+     * the results
+     */
+    public interface HubDetailSetListener {
+        /**
+         * @return whether the HubDetailSetListener still can still accept the result
+         */
         boolean isActive();
+
+        /**
+         * Delivers the hubDetailsSet to the HubDetailSetListener
+         * @param hubDetailsSet
+         */
+        void onHubDetailsReady(Set<HubDetails> hubDetailsSet);
     }
 }

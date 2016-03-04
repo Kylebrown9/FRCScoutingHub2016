@@ -1,8 +1,13 @@
 package org.ncfrcteams.frcscoutinghub2016.network;
 
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.util.Log;
+
 import org.ncfrcteams.frcscoutinghub2016.network.server.Hub;
 import org.ncfrcteams.frcscoutinghub2016.network.server.Server;
 
+import java.io.IOException;
 import java.util.UUID;
 
 /**
@@ -16,5 +21,33 @@ public class Network {
         return Server.spawn(name, passcode);
     }
 
+    //http://stackoverflow.com/questions/18657427/ioexception-read-failed-socket-might-closed-bluetooth-on-android-4-3
+    public static BluetoothSocket getConnectedSocketTo(BluetoothDevice bluetoothDevice) {
+        BluetoothSocket socket = null;
 
+        try {
+            socket = bluetoothDevice.createRfcommSocketToServiceRecord(Network.SCOUTING_HUB_UUID);
+        } catch (Exception e) {
+            Log.d("HubQuery", "Error creating socket");}
+
+        try {
+            socket.connect();
+            Log.e("HubQuery","Connected");
+        } catch (IOException e) {
+            Log.e("",e.getMessage());
+            try {
+                Log.d("HubQuery", "trying fallback...");
+
+                socket =(BluetoothSocket) bluetoothDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(bluetoothDevice,1);
+                socket.connect();
+
+                Log.d("HubQuery", "Connected");
+            }
+            catch (Exception e2) {
+                Log.d("HubQuery", "Couldn't establish Bluetooth connection!");
+            }
+        }
+        Log.d("HubQuery",socket.isConnected()? "socket is connected" : "socket is not connected");
+        return socket;
+    }
 }

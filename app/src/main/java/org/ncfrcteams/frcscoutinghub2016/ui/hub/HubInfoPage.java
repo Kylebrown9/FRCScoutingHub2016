@@ -35,7 +35,7 @@ public class HubInfoPage extends AppCompatActivity {
 
     public void updateNumConnectedOutput(View view) {
 //        String a = Integer.toString(hub.getNumConnected());  //set text method requires explicit string type
-        String a = Integer.toString(ConnectionListenerJob.NUMACCEPTS);
+        String a = Integer.toString(ConnectionListenerJob.NUM_ACCEPTS);
         numConnectedOutput.setText(a);
     }
 

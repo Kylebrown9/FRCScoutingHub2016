@@ -1,4 +1,4 @@
-package org.ncfrcteams.frcscoutinghub2016.network;
+package org.ncfrcteams.frcscoutinghub2016.network.stuff;
 
 /**
  * Created by Admin on 3/2/2016.
@@ -13,7 +13,10 @@ public abstract class Job extends Thread {
 
     public void run() {
         init();
-        while (alive && loops) {
+        if(!loops)
+            return;
+
+        while (alive) {
 //            try {
 //                Thread.sleep(1);
 //            } catch (InterruptedException e) {

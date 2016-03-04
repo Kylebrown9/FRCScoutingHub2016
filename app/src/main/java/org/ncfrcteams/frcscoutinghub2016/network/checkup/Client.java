@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-import org.ncfrcteams.frcscoutinghub2016.network.Job;
+import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
 import org.ncfrcteams.frcscoutinghub2016.network.Network;
 import org.ncfrcteams.frcscoutinghub2016.network.connect.ConfirmMessage;
