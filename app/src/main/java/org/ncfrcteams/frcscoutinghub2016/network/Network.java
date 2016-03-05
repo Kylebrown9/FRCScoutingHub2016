@@ -31,16 +31,16 @@ public class Network {
         try {
             socket = bluetoothDevice.createRfcommSocketToServiceRecord(Network.SCOUTING_HUB_UUID);
         } catch (Exception e) {
-            Log.d("HubQuery", "Error creating socket");
+            Log.d("Network", "Error creating socket");
         }
 
         try {
             if (socket != null) socket.connect();
-            Log.d("HubQuery","Connected via standard method");
+            Log.d("Network","Connected via standard method");
         } catch (IOException e) {
 //            socket = tryAltConnectTo(bluetoothDevice, FIRST_CHANNEL, LAST_CHANNEL);
         }
-        Log.d("HubQuery",(socket != null && socket.isConnected())? "socket is connected" : "socket is not connected");
+        Log.d("Network",(socket != null && socket.isConnected())? "socket is connected" : "socket is not connected");
         return socket;
     }
 
@@ -53,11 +53,11 @@ public class Network {
                 socket = tryConnectTo(createSocket, bluetoothDevice, i);
             }
         } catch (NoSuchMethodException e1) {
-            Log.d("HubQuery","could not find reflection method");
+            Log.d("Network","could not find reflection method");
             e1.printStackTrace();
         }
 
-        Log.d("HubQuery",(socket != null && socket.isConnected())? "socket is connected" : "socket is not connected");
+        Log.d("Network",(socket != null && socket.isConnected())? "socket is connected" : "socket is not connected");
         return socket;
     }
 
@@ -67,11 +67,11 @@ public class Network {
             socket = (BluetoothSocket) m.invoke(bluetoothDevice, port);
             socket.connect();
 
-            Log.d("HubQuery", "Connected via fallback num:" + port);
+            Log.d("Network", "Connected via fallback num:" + port);
             return socket;
         }
         catch (Exception e2) {
-            Log.d("HubQuery", "Failed fallback num:" + port);
+            Log.d("Network", "Failed fallback num:" + port);
             return null;
         }
     }

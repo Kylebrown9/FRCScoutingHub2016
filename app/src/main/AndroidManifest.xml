@@ -19,9 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name=".LaunchHub"-->
-            <!--android:label="@string/title_activity_launch_hub" />-->
         <activity
             android:name=".ui.hubselection.HubListActivity"
             android:label="@string/title_activity_hub_list"
