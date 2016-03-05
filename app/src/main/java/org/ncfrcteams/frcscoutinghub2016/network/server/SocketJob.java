@@ -136,9 +136,16 @@ public class SocketJob extends Job {
 
     public void closeAll() {
         try {
-            objectInputStream.close();
-            objectOutputStream.close();
-            bluetoothSocket.close();
+            if(objectOutputStream != null) {
+                objectOutputStream.flush();
+                objectOutputStream.close();
+            }
+
+            if(objectInputStream != null)
+                objectInputStream.close();
+
+            if(bluetoothSocket != null)
+                bluetoothSocket.close();
         } catch (IOException e) {
             Log.d("SocketJob-closeAll()","IOException");
             e.printStackTrace();

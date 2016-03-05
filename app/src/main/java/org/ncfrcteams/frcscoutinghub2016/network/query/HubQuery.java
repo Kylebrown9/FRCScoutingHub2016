@@ -41,7 +41,7 @@ public class HubQuery extends Thread {
      * Attempts to acquire a HostDetail from its BluetoothDevice
      */
     public void run() {
-        bluetoothSocket = Network.getConnectedSocketTo(device);
+        bluetoothSocket = Network.startSocketTo(device);
 
         Message message;
         try {
@@ -53,6 +53,8 @@ public class HubQuery extends Thread {
 
             if(message.getType() == Message.Type.HUBNAME) {
                 hubName = ((HubNameMessage) message).getName();
+            } else {
+                Log.d("HubQuery","invalid reply from server");
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -75,13 +77,16 @@ public class HubQuery extends Thread {
      * Stops the HubQuery operation by closing the ObjectInputStream
      */
     public void kill() {
+        Log.d("HubQuery","Thread close");
         closeAll();
     }
 
-    public void closeAll() {
+    private void closeAll() {
         try {
-            if(objectOutputStream != null)
+            if(objectOutputStream != null) {
+                objectOutputStream.flush();
                 objectOutputStream.close();
+            }
 
             if(objectInputStream != null)
                 objectInputStream.close();

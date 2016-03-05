@@ -34,7 +34,7 @@ public class ConnectionListenerJob extends Job {
             Log.d("ConnectionListenerJob","start of accept()");
             SocketJob.spawn(server, bluetoothServerSocket.accept());
             NUM_ACCEPTS++;
-//            Log.d("ConnectionListenerJob", "connect heard");
+            Log.d("ConnectionListenerJob", "connect heard");
         } catch (IOException e) {
             Log.d("ConnectionListenerJob","IOException on accept()");
             e.printStackTrace();

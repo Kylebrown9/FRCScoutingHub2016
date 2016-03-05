@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by Admin on 2/26/2016.
  */
 public class QueryTask extends AsyncTask<QueryTask.HubDetailSetListener,Void,Set<HubDetails>> {
-    public static final long TIMEOUT = 4000;
+    public static final long TIMEOUT = 10000;
     private HubDetailSetListener hubDetailSetListener;
 
     /**
@@ -31,6 +31,10 @@ public class QueryTask extends AsyncTask<QueryTask.HubDetailSetListener,Void,Set
         for(BluetoothDevice bluetoothDevice : bluetoothDeviceSet) {
             hubQuerySet.add(HubQuery.spawn(bluetoothDevice));
         }
+
+        Set<HubDetails> newHubDetailsSet = new HashSet<>();
+        if(bluetoothDeviceSet.size() == 0)
+            return newHubDetailsSet;
         //Wait
         try {
             Thread.sleep(TIMEOUT);
@@ -38,7 +42,7 @@ public class QueryTask extends AsyncTask<QueryTask.HubDetailSetListener,Void,Set
             e.printStackTrace();
         }
 
-        Set<HubDetails> newHubDetailsSet = new HashSet<>();
+
         HubDetails hubDetails;
         for(HubQuery hubQuery : hubQuerySet) {
             hubDetails = hubQuery.getHubDetails();
