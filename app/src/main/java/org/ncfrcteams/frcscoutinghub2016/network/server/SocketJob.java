@@ -3,7 +3,7 @@ package org.ncfrcteams.frcscoutinghub2016.network.server;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
+import org.ncfrcteams.frcscoutinghub2016.database.SuperMap;
 import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
 import org.ncfrcteams.frcscoutinghub2016.network.checkup.AcknowledgeMessage;
@@ -109,12 +109,12 @@ public class SocketJob extends Job {
         this.clientReadyFlag = ready;
     }
 
-    public MatchRecord requestMatch() {
+    public SuperMap requestMatch() {
         return server.getMatchRequest();
     }
 
-    public void submitMatchRecord(MatchRecord matchRecord) {
-        server.submitMatchRecord(matchRecord);
+    public void submitMatchRecord(SuperMap superMap) {
+        server.submitMatchRecord(superMap);
     }
 
     public boolean isConnected() {

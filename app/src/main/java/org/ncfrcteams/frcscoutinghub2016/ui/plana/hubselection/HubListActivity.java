@@ -1,4 +1,4 @@
-package org.ncfrcteams.frcscoutinghub2016.ui.hubselection;
+package org.ncfrcteams.frcscoutinghub2016.ui.plana.hubselection;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;

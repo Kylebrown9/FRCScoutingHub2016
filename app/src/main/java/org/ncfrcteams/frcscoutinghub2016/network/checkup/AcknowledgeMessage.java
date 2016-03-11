@@ -1,6 +1,6 @@
 package org.ncfrcteams.frcscoutinghub2016.network.checkup;
 
-import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
+import org.ncfrcteams.frcscoutinghub2016.database.SuperMap;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
 
 import java.io.Serializable;
@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class AcknowledgeMessage extends Message implements Serializable {
     private int id;
-    private MatchRecord matchRequest;
+    private SuperMap matchRequest;
     private boolean hasMatchRequest;
 
     public AcknowledgeMessage(int id) {
@@ -20,7 +20,7 @@ public class AcknowledgeMessage extends Message implements Serializable {
         hasMatchRequest = false;
     }
 
-    public AcknowledgeMessage(int id, MatchRecord matchRequest) {
+    public AcknowledgeMessage(int id, SuperMap matchRequest) {
         super(Type.ACKNOWLEDGE);
         this.id = id;
         this.matchRequest = matchRequest;

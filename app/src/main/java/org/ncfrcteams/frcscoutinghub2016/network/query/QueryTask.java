@@ -26,7 +26,7 @@ public class QueryTask extends AsyncTask<QueryTask.HubDetailSetListener,Void,Set
         Set<BluetoothDevice> bluetoothDeviceSet = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
         Set<HubQuery> hubQuerySet = new HashSet<HubQuery>();
 
-        Log.d("NumBluetooth",Integer.toString(bluetoothDeviceSet.size())); //currently equals 1 if a paired device is within range even unconnected
+        Log.d("QueryTask","Num Bonded" + Integer.toString(bluetoothDeviceSet.size())); //currently equals 1 if a paired device is within range even unconnected
 
         for(BluetoothDevice bluetoothDevice : bluetoothDeviceSet) {
             hubQuerySet.add(HubQuery.spawn(bluetoothDevice));

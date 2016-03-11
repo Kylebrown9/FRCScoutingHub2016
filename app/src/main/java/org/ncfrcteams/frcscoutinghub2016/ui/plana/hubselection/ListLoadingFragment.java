@@ -1,4 +1,4 @@
-package org.ncfrcteams.frcscoutinghub2016.ui.hubselection;
+package org.ncfrcteams.frcscoutinghub2016.ui.plana.hubselection;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,7 +1,7 @@
 package org.ncfrcteams.frcscoutinghub2016.network.server;
 
 import org.ncfrcteams.frcscoutinghub2016.database.Database;
-import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
+import org.ncfrcteams.frcscoutinghub2016.database.SuperMap;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ public interface Hub {
      * and then enter data
      *
      * @param matchRequests the match requests that you are sending, they should be newly constructed
-     *                      MatchRecord. The requests should together describe all of the robots that
+     *                      SuperMap. The requests should together describe all of the robots that
      *                      need to be scouted for a specific match
      */
-    public void publishMatchRequests(List<MatchRecord> matchRequests);
+    public void publishMatchRequests(List<SuperMap> matchRequests);
 
     /**
      * Retrieves the Hubs database which contains a dynamic collection of all submitted MatchRecords

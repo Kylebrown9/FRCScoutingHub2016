@@ -1,4 +1,4 @@
-package org.ncfrcteams.frcscoutinghub2016.ui;
+package org.ncfrcteams.frcscoutinghub2016.ui.plana;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.ncfrcteams.frcscoutinghub2016.R;
-import org.ncfrcteams.frcscoutinghub2016.ui.hub.HubSetupActivity;
-import org.ncfrcteams.frcscoutinghub2016.ui.hubselection.HubListActivity;
+import org.ncfrcteams.frcscoutinghub2016.ui.plana.hub.HubSetupActivity;
+import org.ncfrcteams.frcscoutinghub2016.ui.plana.hubselection.HubListActivity;
 
 public class MainActivity extends AppCompatActivity {
 

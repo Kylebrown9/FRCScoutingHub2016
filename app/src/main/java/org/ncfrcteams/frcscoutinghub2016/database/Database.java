@@ -1,27 +1,39 @@
 package org.ncfrcteams.frcscoutinghub2016.database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Admin on 2/26/2016.
+ * Created by Kyle Brown on 2/26/2016.
  */
-public class Database {
+public class Database implements Serializable {
+    private int ID;
+
     /**
      * Contains the most recent copy of every MatchNumber,TeamNumber,Scouter record
      */
-    private List<MatchRecord> matchRecordList = new ArrayList<>();
+    private List<SuperMap> superMapList = new ArrayList<>();
+
+
+    public Database(int ID) {
+        this.ID = ID;
+    }
 
     /**
-     * Adds the the MatchRecord to the matchRecordList, if the matchRecord has an equivalent
-     * (defined by the MatchRecord.equals() method) MatchRecord already on the list it will
+     * Adds the the SuperMap to the superMapList, if the superMap has an equivalent
+     * (defined by the SuperMap.equals() method) SuperMap already on the list it will
      * remove the out of date version and add itself in its place.
      *
-     * @param matchRecord
+     * @param superMap the match record being added
      */
-    public void addMatchRecord(MatchRecord matchRecord) {
-        matchRecordList.remove(matchRecord);
-        matchRecordList.add(matchRecord);
+    public void addMatchRecord(SuperMap superMap) {
+        superMapList.remove(superMap);
+        superMapList.add(superMap);
+    }
+
+    public List<SuperMap> getSuperMapList() {
+        return superMapList;
     }
 
     /**
@@ -30,15 +42,19 @@ public class Database {
      * @param team the team you are checking
      * @return a list of every match the team participated in
      */
-    public List<MatchRecord> getMatchRecordForTeam(int team) {
-        List<MatchRecord> teamMatchRecords = new ArrayList<>();
+    public List<SuperMap> getMatchRecordForTeam(int team) {
+        List<SuperMap> teamSuperMaps = new ArrayList<>();
 
-        for (MatchRecord record : matchRecordList) {
+        for (SuperMap record : superMapList) {
             if(record.getTeamNum() == team) {
-                teamMatchRecords.add(record);
+                teamSuperMaps.add(record);
             }
         }
 
-        return teamMatchRecords;
+        return teamSuperMaps;
+    }
+
+    public int getID() {
+        return ID;
     }
 }

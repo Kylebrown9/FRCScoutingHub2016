@@ -1,6 +1,6 @@
 package org.ncfrcteams.frcscoutinghub2016.network.checkup;
 
-import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
+import org.ncfrcteams.frcscoutinghub2016.database.SuperMap;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
 import org.ncfrcteams.frcscoutinghub2016.network.server.SocketJob;
 
@@ -43,15 +43,15 @@ public class CheckupMessage extends Message implements Serializable {
      * scouted by the client
      *
      * @param id The id number of the message being sent
-     * @param matchRecord The updated MatchRecord being sent to the server
+     * @param superMap The updated SuperMap being sent to the server
      * @return The message for the Client to send
      */
 
-    public static CheckupMessage UpdateMessage(int id, final MatchRecord matchRecord) {
+    public static CheckupMessage UpdateMessage(int id, final SuperMap superMap) {
         return new CheckupMessage(id) {
             public AcknowledgeMessage update(SocketJob socketJob) {
                 socketJob.setReady(true);
-                socketJob.submitMatchRecord(matchRecord);
+                socketJob.submitMatchRecord(superMap);
 
                 return new AcknowledgeMessage(getId());
             }
@@ -60,7 +60,7 @@ public class CheckupMessage extends Message implements Serializable {
 
     /**
      * Generates a message that indicates to the server that the client is ready to accept a match
-     * This should prompt the server to send a MatchRecord that represents a match request
+     * This should prompt the server to send a SuperMap that represents a match request
      * if one is available.
      *
      * @param id The id number of the message being sent
@@ -75,10 +75,10 @@ public class CheckupMessage extends Message implements Serializable {
              */
             public AcknowledgeMessage update(SocketJob socketJob) {
                 socketJob.setReady(true);
-                MatchRecord matchRecord = socketJob.requestMatch();
+                SuperMap superMap = socketJob.requestMatch();
 
-                if(matchRecord != null) {
-                    return new AcknowledgeMessage(getId(),matchRecord);
+                if(superMap != null) {
+                    return new AcknowledgeMessage(getId(), superMap);
                 }
                 return new AcknowledgeMessage(getId());
             }

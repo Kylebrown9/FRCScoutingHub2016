@@ -6,6 +6,7 @@ import android.util.Log;
 
 import org.ncfrcteams.frcscoutinghub2016.network.Network;
 import org.ncfrcteams.frcscoutinghub2016.network.Message;
+import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,7 +15,7 @@ import java.io.ObjectOutputStream;
 /**
  * Created by Admin on 2/26/2016.
  */
-public class HubQuery extends Thread {
+public class HubQuery extends Job {
     BluetoothDevice device;
     BluetoothSocket bluetoothSocket;
     ObjectInputStream objectInputStream = null;
@@ -34,13 +35,15 @@ public class HubQuery extends Thread {
     }
 
     private HubQuery(BluetoothDevice device) {
+        super(false);
         this.device = device;
     }
 
     /**
      * Attempts to acquire a HostDetail from its BluetoothDevice
+     * adding synchronized causes it to hang
      */
-    public void run() {
+    public synchronized void init() {
         bluetoothSocket = Network.startSocketTo(device);
 
         Message message;
@@ -63,6 +66,8 @@ public class HubQuery extends Thread {
         }
     }
 
+    public void periodic(){}
+
     /**
      * @return an object that describes the hub that corresponds to its BluetoothDevice and name if there is one,
      * if not hub has been found returns null
@@ -75,9 +80,10 @@ public class HubQuery extends Thread {
 
     /**
      * Stops the HubQuery operation by closing the ObjectInputStream
+     * adding synchronized causes it to hang
      */
-    public void kill() {
-        Log.d("HubQuery","Thread close");
+    public synchronized void kill() {
+        if (bluetoothSocket != null) Log.d("HubQuery", bluetoothSocket.getRemoteDevice().getName() + " close");
         closeAll();
     }
 

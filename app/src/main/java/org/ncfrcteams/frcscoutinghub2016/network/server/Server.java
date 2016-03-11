@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 
 import org.ncfrcteams.frcscoutinghub2016.database.Database;
-import org.ncfrcteams.frcscoutinghub2016.database.MatchRecord;
+import org.ncfrcteams.frcscoutinghub2016.database.SuperMap;
 import org.ncfrcteams.frcscoutinghub2016.network.stuff.Job;
 import org.ncfrcteams.frcscoutinghub2016.network.Network;
 
@@ -22,8 +22,8 @@ public class Server extends Job implements Hub {
     private ConnectionListenerJob connectionListenerJob;
     private List<SocketJob> socketJobList = new ArrayList<>();
 
-    private List<MatchRecord> matchRequestList;
-    private Stack<MatchRecord> matchRequestStack = new Stack<MatchRecord>();
+    private List<SuperMap> matchRequestList;
+    private Stack<SuperMap> matchRequestStack = new Stack<SuperMap>();
 
     private Database database = new Database();
 
@@ -68,11 +68,11 @@ public class Server extends Job implements Hub {
         socketJobList.remove(socketJob);
     }
 
-    public void submitMatchRecord(MatchRecord matchRecord) {
-        database.addMatchRecord(matchRecord);
+    public void submitMatchRecord(SuperMap superMap) {
+        database.addMatchRecord(superMap);
     }
 
-    public MatchRecord getMatchRequest() {
+    public SuperMap getMatchRequest() {
         if(matchRequestStack.size() != 0) {
             return matchRequestStack.pop();
         }
@@ -80,10 +80,10 @@ public class Server extends Job implements Hub {
     }
 
     //*****************************Interface Methods***************************************
-    public void publishMatchRequests(List<MatchRecord> matchRequestList) {
+    public void publishMatchRequests(List<SuperMap> matchRequestList) {
         this.matchRequestList = matchRequestList;
 
-        matchRequestStack = new Stack<MatchRecord>();
+        matchRequestStack = new Stack<SuperMap>();
         matchRequestStack.addAll(matchRequestList);
     }
 
@@ -122,6 +122,7 @@ public class Server extends Job implements Hub {
      * Kills the contained ConnectionListenerJob and all associated SocketThreads
      */
     public void kill() {
+        super.kill();
         connectionListenerJob.kill();
         for(SocketJob socketJob : socketJobList) {
             socketJob.kill();
