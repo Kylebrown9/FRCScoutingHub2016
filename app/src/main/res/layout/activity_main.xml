@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.plana.hub.HubSetupActivity">
+    tools:context="org.ncfrcteams.frcscoutinghub2016.ui.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +21,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/h_content_hub_setup" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentArea"/>
 
 </android.support.design.widget.CoordinatorLayout>

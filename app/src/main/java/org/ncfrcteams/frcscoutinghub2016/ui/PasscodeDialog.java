@@ -1,4 +1,4 @@
-package org.ncfrcteams.frcscoutinghub2016.network.query;
+package org.ncfrcteams.frcscoutinghub2016.ui;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.text.InputType;
 import android.widget.EditText;
 
 /**
- * Created by Admin on 3/1/2016.
+ * Created by Kyle Brown on 3/10/2016.
  */
 public class PasscodeDialog {
     private Dialog dialog;
@@ -47,6 +47,6 @@ public class PasscodeDialog {
     }
 
     public interface PasscodeSelectionListener {
-        void onPasscodeSelect(String passcode);
+        public void onPasscodeSelect(String passcode);
     }
 }

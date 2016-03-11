@@ -114,4 +114,7 @@
     <string name="title_activity_main_activity_b">MainActivityB</string>
     <string name="mainBOption1">Scouter</string>
     <string name="title_activity_schedule_select">ScheduleSelectActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

@@ -28,11 +28,15 @@ public class SuperMap<K,V> implements Serializable {
         map.put(key,value);
     }
 
-    public synchronized void undo() {
+    public synchronized String undo() {
+        if(pairList.size() == 0)
+            return "No put to undo";
+
         int last = pairList.size()-1;
         Pair<K,V> lastState = pairList.get(last);
         pairList.remove(last);
         map.put(lastState.key,lastState.value);
+        return "Reverted key: " + lastState.key + ", to previous value: " + lastState.value;
     }
 
     public synchronized V get(K key) {
@@ -51,9 +55,11 @@ public class SuperMap<K,V> implements Serializable {
             this.key = key;
             this.value = value;
         }
+
+        public String toString() {
+            return key.toString() + ", " + value.toString();
+        }
     }
-
-
 }
 
 

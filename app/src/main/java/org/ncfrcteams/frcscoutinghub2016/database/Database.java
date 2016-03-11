@@ -46,9 +46,6 @@ public class Database implements Serializable {
         List<SuperMap> teamSuperMaps = new ArrayList<>();
 
         for (SuperMap record : superMapList) {
-            if(record.getTeamNum() == team) {
-                teamSuperMaps.add(record);
-            }
         }
 
         return teamSuperMaps;

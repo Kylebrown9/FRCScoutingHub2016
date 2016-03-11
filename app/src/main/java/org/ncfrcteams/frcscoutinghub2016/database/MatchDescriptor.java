@@ -70,7 +70,7 @@ public class MatchDescriptor implements Serializable {
     }
 
     public enum Obstacle {
-        RT(0),RW(1),DB(2),SP(3),PC(4),CF(5),MT(6),RP(7);
+        ROUGH_TERRAIN(0),ROCK_WALL(1),DRAW_BRIDGE(2),SALLY_PORT(3),PORTCULLIS(4),CHIVEL_DE_FRISE(5),MOAT(6),RAMPARTS(7);
 
         private int value;
 
