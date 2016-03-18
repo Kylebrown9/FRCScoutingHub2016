@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".scouter.ScoutMainActivity" >
+
+    <item android:id="@+id/toggleTele"
+        android:title="Teleop Mode"
+        android:icon="@drawable/toggle_tele_off"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/undo"
+        android:title="Undo Action"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom" />
+
+</menu>

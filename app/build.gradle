@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "org.ncfrcteams.frcscoutinghub2016"
-        minSdkVersion 20
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -30,4 +30,8 @@ dependencies {
     compile 'com.android.support:design:23.2.0'
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.android.support:recyclerview-v7:23.2.0'
+
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.android.gms:play-services-drive:8.4.0'
+
 }
